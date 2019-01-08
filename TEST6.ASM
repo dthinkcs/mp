@@ -1,0 +1,24 @@
+DATA SEGMENT
+	NUM1 DB 34H;
+	NUM2 DW 194AH;
+DATA ENDS
+
+
+CODE SEGMENT
+        ASSUME CS:CODE, DS:DATA
+START:
+	MOV CX, DATA;
+	MOV DS, CX; // direct mov is NOT allowed
+
+        MOV CL, NUM1;
+	MOV BX, NUM2;
+	
+
+	MOV AH, 4CH;
+	INT 21H;
+
+
+
+ CODE ENDS
+END START
+

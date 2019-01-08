@@ -1,0 +1,15 @@
+
+CODE SEGMENT
+        ASSUME CS:CODE
+START:
+        MOV CL, 31
+	MOV AL, CL
+
+	MOV AH, 4CH
+	INT 21H
+
+
+
+ CODE ENDS
+END START
+
