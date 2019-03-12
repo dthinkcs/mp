@@ -1,8 +1,4 @@
-PRINT MACRO STR
-LEA DX,STR
-MOV AH,09
-INT 21h
-ENDM
+
 data segment
         a db 'Enter the main string',10,13,'$'
         maxlen db 20
@@ -14,15 +10,20 @@ data segment
         substr db 10 dup(?)
 data ends
 code segment
-assume cs:code,ds:data,es:data
-        start:
-        mov ax,data
-        MOV DS,AX
-        MOV ES,AX
-        PRINT a
-        LEA dx,maxlen
-        mov ah,0AH
-        int 21h
+	assume cs:code,ds:data,es:data     
+print macro str
+	lea dx,str
+	mov ah,09
+	int 21h
+endm
+start:
+	mov ax,data
+	mov ds,ax
+	mov es,ax
+	print a
+	lea dx,maxlen
+	mov ah,0ah
+	int 21h
 
 		
 code ends
