@@ -1,0 +1,32 @@
+DATA SEGMENT
+	A DD 9F62C06BH
+	B DD 0A2ED3921H
+	DIFF DD ?
+	BRW DB 00H
+DATA ENDS
+
+CODE SEGMENT
+ASSUME CS:CODE, DS:DATA
+START:
+	MOV DX, DATA
+	MOV DS, DX
+	
+	MOV SI, 0
+        MOV CX, 2
+	CLC
+	
+	BACK:
+                MOV AX, WORD PTR A[SI]
+                SBB AX, WORD PTR B[SI]
+                MOV WORD PTR DIFF[SI], AX
+		INC SI
+                INC SI
+                LOOP BACK
+	
+	ADC BRW, 0
+	
+	MOV AH, 4CH
+	INT 21H
+
+CODE ENDS
+END START

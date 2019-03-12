@@ -1,0 +1,30 @@
+DATA SEGMENT
+	A DB 12H, 34H, 56H, 78H, 90H, 21H, 43H, 65H, 87H, 09H; // 20 NIBBLE 10 BYTES bytes of data
+	LEN Db $-A;//;LEN Db $-A;
+	B DB 10 dup(?); // B HAS GARBAGE DATA 
+	
+	;//LEN Db $-A;// LEN DW 10; // effectively LEN DW 0AH; STORES THE LENGTH OF ARRAYS
+DATA ENDS
+
+CODE SEGMENT
+	ASSUME CS: CODE, DS: DATA;
+START:
+	MOV DX, DATA; // DATA TO DS
+	MOV DS, DX;
+	
+	MOV CH, 0;
+	MOV CL, LEN; // CL KARO ITS BETTER ; CX <- LEN
+	MOV SI, OFFSET A;
+	MOV DI, OFFSET B;
+	BACK:
+		MOV AL, [SI]; // EK BAAR NEIN DO COPY ax<-(*SI) effectivelyMOV [DI], [SI];
+		MOV [DI], AL; // (*DI)<-ax
+		INC SI; // arrA++
+		INC DI; // arrB++
+	LOOP BACK
+	
+
+	MOV AH, 4CH;
+	INT 21h;
+CODE ENDS
+END START

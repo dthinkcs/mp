@@ -1,0 +1,21 @@
+DATA SEGMENT
+        A DB 13H
+        RES DB ?
+DATA ENDS
+CODE SEGMENT
+ASSUME CS:CODE, DS:DATA
+START:
+        MOV CX,DATA
+        MOV DS,CX
+
+        MOV RES,0
+        MOV AL,A
+        RCR AL,1
+        JC ODD
+        JMP EXIT
+    ODD:MOV RES,1
+   EXIT:MOV AH,4CH
+        INT 21H
+CODE ENDS
+END START
+

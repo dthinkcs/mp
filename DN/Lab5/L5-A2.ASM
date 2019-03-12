@@ -1,0 +1,32 @@
+DATA SEGMENT
+        A DD 11111111H
+        COUNT DB ?
+DATA ENDS
+CODE SEGMENT
+ASSUME CS:CODE, DS:DATA
+START:
+        MOV CX,DATA
+        MOV DS,CX
+
+        MOV CX,16
+        MOV COUNT,0
+        MOV SI,0
+        MOV AX,WORD PTR A[SI]
+        INC SI
+        INC SI
+        MOV DX,WORD PTR A[SI]
+   BACK:RCR AX,1
+        JC INCC1
+  BACK2:RCR DX,1
+        JC INCC2
+  BACK3:LOOP BACK
+        JMP EXIT
+  INCC1:INC COUNT
+        JMP BACK2
+  INCC2:INC COUNT
+        JMP BACK3
+   EXIT:MOV AH,4CH
+        INT 21H
+CODE ENDS
+END START
+

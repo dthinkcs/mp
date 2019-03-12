@@ -1,0 +1,81 @@
+DATA SEGMENT
+MSG DB 'ENTER A HEX NUMBER: $'
+NL DB 13,10,'$'
+RES DW ?
+DATA ENDS
+
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+START:
+        MOV CX,DATA
+        MOV DS,CX
+        LEA DX,MSG
+        MOV AH,09H
+        INT 21H
+        CALL KBRD
+        LEA DX,NL
+        MOV AH,09H
+        INT 21H
+	MOV AL,BL
+        MOV AH, 0
+        MOV BL, 0AH
+        DIV BL
+        MOV DH, AH
+        MOV AH, 0
+	DIV BL
+        MOV CL, 04
+        ROR AH, CL
+        ADD AH, DH
+        XCHG AH, AL
+	MOV RES,AX
+	MOV BL,BYTE PTR RES+1
+	AND BL,0F0H
+	MOV CL,04H
+	ROL BL,CL
+	ADD BL,30H
+	MOV DL,BL
+	MOV AH,02H
+	INT 21H
+        MOV BL,BYTE PTR RES+1
+	AND BL,0FH
+	ADD BL,30H
+	MOV DL,BL
+	MOV AH,02H
+	INT 21H
+	MOV BL,BYTE PTR RES
+	AND BL,0F0H
+	MOV CL,04H
+	ROL BL,CL
+	ADD BL,30H
+	MOV DL,BL
+	MOV AH,02H
+	INT 21H
+        MOV BL,BYTE PTR RES
+	AND BL,0FH
+	ADD BL,30H
+	MOV DL,BL
+	MOV AH,02H
+	INT 21H
+	MOV AH,4CH
+	INT 21H	
+
+ASCII_HEX: CMP AL,39H
+           JBE EXIT
+           SUB AL,07H
+           EXIT: SUB AL,30H
+           RET
+
+KBRD:   MOV AH,01H
+        INT 21H
+        CALL ASCII_HEX
+        MOV CL,04H
+        ROL AL,CL
+        MOV BL,AL
+        MOV AH,01H
+        INT 21H
+        CALL ASCII_HEX
+        ADD BL,AL
+        RET
+
+CODE ENDS 
+END START

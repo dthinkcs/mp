@@ -1,0 +1,44 @@
+DATA SEGMENT
+    A DB 05,04,03,02,01
+    N DB 05
+    TEMP DB 0
+DATA ENDS
+
+CODE SEGMENT
+    ASSUME CS:CODE, DS:DATA
+
+START:
+      MOV AX,DATA
+      MOV DS,AX
+    
+      MOV SI,0
+
+BACK2:MOV CX,WORD PTR N
+      DEC CX
+
+      MOV BX,SI
+
+      MOV DI,SI
+      INC DI
+
+BACK1:MOV AL,A[DI]
+      CMP AL,A[BX]
+      JNC SKIP
+      MOV BX,DI
+
+SKIP: INC DI
+      CMP DI,WORD PTR N
+      JC BACK1
+
+      XCHG AL,A[SI]
+      XCHG A[BX],AL
+
+      INC SI
+      CMP SI,CX
+      JC BACK2
+
+      MOV AH,4CH
+      INT 21H
+     
+      CODE ENDS
+END START

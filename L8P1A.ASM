@@ -1,0 +1,38 @@
+DATA SEGMENT
+A DB ?
+MSG1 DB 'ENTER VALUE'
+LINE DB 10,13,'$'
+DATA ENDS
+
+PRINT MACRO M
+     LEA DX,M
+     MOV AH,09
+     INT 21H
+
+ENDM
+
+
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+ START:
+       MOV AX,DATA
+       MOV DS,AX
+
+
+
+       PRINT MSG1
+       PRINT LINE
+       MOV AH,08
+       INT 21H
+       PRINT LINE
+       MOV DL,AL
+       MOV AH,02
+       INT 21H
+       MOV AH,4CH
+       INT 21H
+
+  CODE ENDS
+  END START
+
+
+

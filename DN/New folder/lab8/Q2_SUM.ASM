@@ -1,0 +1,95 @@
+DATA SEGMENT
+        MSG DB 'ENTER 2 DIGIT HEX: $'
+        OUTMSG DB 'SUM OF THE DIGITS IS: $'
+		NEXTLINE DB 10, 13, '$'
+		
+		NUM DB 2 DUP(?)
+		CARRY DB 0
+DATA ENDS
+
+CODE SEGMENT
+ASSUME CS:CODE, DS: DATA
+START:
+        MOV DX, DATA
+        MOV DS, DX
+		
+        MOV CX, 02
+		MOV SI, 0
+		
+		BK:
+			LEA DX, MSG
+			MOV AH, 09H
+			INT 21H
+			MOV AH, 01
+			INT 21H
+			CALL ASCII_HEX
+			
+			MOV BL, 10H
+			MOV AH, 0
+			MUL BL
+			MOV DH, AL
+		
+			MOV AH, 01
+			INT 21H
+			CALL ASCII_HEX
+			ADD AL, DH
+			MOV BYTE PTR NUM[SI], AL
+			INC SI
+			LEA DX, NEXTLINE
+			MOV AH, 09H
+			INT 21H
+			LOOP BK
+		
+		LEA DX, OUTMSG
+		MOV AH, 09H
+        INT 21H
+		
+		MOV SI, 0
+		MOV CL, BYTE PTR NUM[SI]
+		INC SI
+		ADD CL, BYTE PTR NUM[SI]
+		ADC CARRY, 0
+		
+		MOV DL, CARRY
+		CALL HEX_ASCII
+		MOV AH, 02H
+        INT 21H
+
+		MOV AL, CL
+		MOV BL, 10H
+		MOV AH, 0
+		DIV BL
+		MOV CH, AH
+		
+		MOV DL, AL
+		CALL HEX_ASCII
+		MOV AH, 02H
+        INT 21H
+		
+		MOV DL, CH
+		CALL HEX_ASCII
+		MOV AH, 02H
+        INT 21H
+		
+		MOV AH, 4CH
+		INT 21H
+		
+		ASCII_HEX:
+			CMP AL, 40H
+			JC SUB30
+			SUB AL, 07H
+			SUB30:	SUB AL, 30H
+			RET
+		
+		HEX_ASCII:
+			CMP DL, 0AH
+			JC ADD30
+			ADD DL, 07H
+			ADD30:	ADD DL, 30H
+			RET
+		
+CODE ENDS
+END START
+
+
+

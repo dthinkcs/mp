@@ -1,0 +1,46 @@
+DATA SEGMENT
+        A DB ?
+		B DB ?
+        LCM DW ?
+DATA ENDS
+
+LIFO SEGMENT STACK
+	DW 100 DUP (?)
+LIFO ENDS
+
+CODE SEGMENT
+ASSUME CS:CODE, DS:DATA, SS:LIFO
+START:
+        MOV DX, DATA
+        MOV DS, DX
+		MOV AX, LIFO
+		MOV SS, AX 
+
+		MOV AL, A
+		MOV BL, B
+        CMP AL, BL
+        JNC L1
+        XCHG AL, BL
+		
+		L1:
+			MOV AH, 0
+			MOV CL, AL
+			
+		L2:
+			PUSH AX
+			DIV BL
+			CMP AH, 0
+			JZ L3
+			POP AX
+			ADD AL, CL
+			ADC AH, 0
+			JMP L2
+			
+		L3:
+			POP LCM
+		
+		MOV AH, 4CH
+		INT 21H
+
+CODE ENDS
+END START

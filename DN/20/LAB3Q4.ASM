@@ -1,0 +1,20 @@
+DATA SEGMENT
+         NUM1 DW 1234H
+         NUM2 DW 5678H
+         RES DW ?
+         BOR DB ?
+DATA ENDS
+CODE SEGMENT
+ASSUME CS:CODE,DS:DATA
+START:
+        MOV AX,DATA
+        MOV DS,AX
+        MOV AX,NUM1
+        SBB AX,NUM2
+        MOV RES,AX
+        MOV BX,AX
+        SBB BOR,0
+        MOV AH,4CH
+        INT 21H
+CODE ENDS
+END START

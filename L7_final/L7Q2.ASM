@@ -1,0 +1,40 @@
+DATA SEGMENT
+    A DB 09,08,03,04,05,02,07,06,01,0AH
+    N DB 0AH
+    SMALL DB 0
+DATA ENDS
+
+CODE SEGMENT
+    ASSUME CS:CODE, DS:DATA
+
+DISP MACRO MSG
+    LEA DX,MSG
+    MOV AH,09H
+    INT 21H
+ENDM
+START:
+    MOV AX,DATA
+    MOV DS,AX
+
+    MOV CL,N
+    MOV CH,0
+    DEC CX
+
+    MOV SI,0
+    MOV BL,A[SI]
+
+    INC SI  
+
+    BACK:  CMP A[SI],BL
+           JNC SKIP
+           MOV BL,A[SI]
+           SKIP: INC SI
+           LOOP BACK
+
+    MOV SMALL,BL      
+
+    MOV AH,4CH
+    INT 21H
+
+    CODE ENDS
+END START

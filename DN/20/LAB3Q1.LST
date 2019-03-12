@@ -1,0 +1,59 @@
+Microsoft (R) Macro Assembler Version 5.00                  2/2/19 10:10:53
+                                                             Page     1-1
+
+
+ 0000				DATA SEGMENT 
+ 0000  1111			        A DW 1111H 
+ 0002  2222			        B DW 2222H 
+ 0004  ??			        SUM DB ? 
+ 0005  ??			        CARRY DB ? 
+ 0006				DATA ENDS 
+ 0000				CODE SEGMENT 
+				        ASSUME CS:CODE, DS:DATA 
+ 0000				START: 
+ 0000  B8 ---- R		        MOV AX,DATA 
+ 0003  8E D8			        MOV DS,AX 
+ 0005  A1 0000 R		        MOV AX,A 
+ 0008  13 06 0002 R		        ADC AX,B 
+ 000C  8D 1E 0004 R		        LEA BX,SUM 
+ 0010  89 07			        MOV [BX],AX 
+ 0012  80 16 0005 R 00		        ADC CARRY,0 
+ 0017  B4 4C			        MOV AH,4CH 
+ 0019  CD 21			        INT 21H 
+ 001B				CODE ENDS 
+				END START 
+Microsoft (R) Macro Assembler Version 5.00                  2/2/19 10:10:53
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	001B	PARA	NONE	
+DATA . . . . . . . . . . . . . .  	0006	PARA	NONE	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+A  . . . . . . . . . . . . . . .  	L WORD	0000	DATA
+
+B  . . . . . . . . . . . . . . .  	L WORD	0002	DATA
+
+CARRY  . . . . . . . . . . . . .  	L BYTE	0005	DATA
+
+START  . . . . . . . . . . . . .  	L NEAR	0000	CODE
+SUM  . . . . . . . . . . . . . .  	L BYTE	0004	DATA
+
+@FILENAME  . . . . . . . . . . .  	TEXT  lab3q1		
+
+
+     20 Source  Lines
+     20 Total   Lines
+      9 Symbols
+
+  51164 + 465380 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

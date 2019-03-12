@@ -1,0 +1,73 @@
+DATA SEGMENT
+        NUM DB 4 DUP (?)
+        TEMP DW 2 DUP (?)
+        RES DW ?
+DATA ENDS
+
+LIFO SEGMENT STACK
+	DW 100 DUP (?)
+LIFO ENDS
+
+CODE SEGMENT
+ASSUME CS:CODE, DS:DATA, SS:LIFO
+START:
+        MOV DX, DATA
+        MOV DS, DX
+		MOV AX, LIFO
+		MOV SS, AX 
+
+		MOV SI, 0
+        MOV DI, 0
+		MOV CX, 02
+		
+		BACK:
+			MOV AL, BYTE PTR NUM[SI]
+			MOV AH, 0
+			INC SI
+			MOV BL, BYTE PTR NUM[SI]
+			MOV BH, 0
+			CALL LCM
+			POP WORD PTR TEMP[DI]
+			INC SI
+			INC DI
+			INC DI
+			LOOP BACK
+			
+		MOV DI, 0
+        MOV AX, WORD PTR TEMP[DI]
+        INC DI
+        INC DI
+        MOV BX, WORD PTR TEMP[DI]
+        CALL LCM
+        POP WORD PTR RES
+		
+		MOV AH, 4CH
+		INT 21H
+		
+		
+	LCM:	
+        CMP AX, BX
+        JNC L1
+        XCHG AX, BX
+		
+		L1:
+			MOV DX, 0
+			MOV CX, AX
+			
+		L2:
+			PUSH AX
+			PUSH DX
+			DIV BX
+			CMP DX, 0
+			JZ L3
+			POP DX
+			POP AX
+			ADD AX, CX
+			ADC DX, 0
+			JMP L2
+			
+		L3:
+			RET
+		
+CODE ENDS
+END START
