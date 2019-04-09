@@ -1,0 +1,15 @@
+DELAY PROC
+	PUSH SI
+	PUSH DI
+     MOV SI,050H
+  UP1: MOV DI,0780H
+  UP2: DEC DI
+       CMP DI,00
+       JNZ UP2
+       DEC SI
+       CMP SI,00
+       JNZ UP1
+	POP DI
+	POP SI
+    RET
+DELAY ENDP

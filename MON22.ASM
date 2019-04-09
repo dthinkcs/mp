@@ -1,44 +1,6 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 DATA SEGMENT
 	STR DB 'RAJ$'
 	LEN DW 3
-	count1 dw 0
-	count2 dw 0
 
 DATA ENDS
 
@@ -52,8 +14,8 @@ START:
 	MOV AH, 0; 
 	INT 10H
 	
-	MOV BL, 24; ROW NUMBER 
-	MOV BH, 0; COLUMN NUMBER 
+	MOV BL, 12; ROW NUMBER 
+	MOV BH, 40; COLUMN NUMBER 
 	
 	MOV AL, 160;  
 	MUL BL
@@ -61,7 +23,7 @@ START:
 	SHL BH, 1
 	MOV BL, BH
 	MOV BH, 0
-	ADD DI, BX ; DI <- r * 160 + c * 2;
+	ADD DI, BX ; 
 	
 	MOV AX, 0B800H
 	MOV ES, AX ; LOAD ADDRESS OF VRAM IN ES
@@ -85,18 +47,6 @@ START:
 	
 	; KEEP PRESS INFINITE LOOP
 	INF:
-		
-		; clear the screen
-		MOV AL, 03
-		MOV AH, 0
-		INT 10H
-		SUB DI, LEN
-		SUB DI, LEN ; to get back to original
-		SUB DI, 160
-		JMP BK
-		CALL DELAY
-	
-		; key press
 		MOV DL, 0FFH;
 		MOV AH, 06H;
 		INT 21H;
@@ -137,7 +87,7 @@ START:
 		JMP BK
 		
 		SKIP3:
-		CMP AL, 'S' ; DOWN ARROW KEY
+		CMP AL, 'S' ; UP ARROW KEY
 		JNZ INF
 		MOV AL, 03
 		MOV AH, 0
@@ -153,21 +103,6 @@ START:
 	
 	MOV AH, 4CH;
 	INT 21H
-	
-DELAY PROC
-
-     MOV SI,0FFH;
-  UP1: MOV DI,0FFFH;
-  UP2: DEC DI
-       CMP DI,00
-       JNZ UP2
-       DEC SI
-       CMP SI,00
-       JNZ UP1
-
-    RET
-DELAY ENDP
-
 CODE ENDS
 END START
 
@@ -176,20 +111,3 @@ END START
 ; DISPLAY FIRST 
 
 ; IF KEY PRESSED THEN INCREMENT THE VALUE OF
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
