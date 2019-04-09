@@ -1,0 +1,26 @@
+DATA SEGMENT
+ARRAY DB 20H,40H,10H,30H,70H,80H,45H,55H,05H,15H
+SMALLEST DB ?
+COUNT DW 0009H
+DATA ENDS
+CODE SEGMENT
+ASSUME CS:CODE,DS:DATA
+START: MOV AX,DATA
+MOV DS,AX
+LEA SI,ARRAY
+MOV AL,[SI]
+MOV SMALLEST,AL
+MOV CX,COUNT
+UP: INC SI
+MOV AL,[SI]
+DEC CX
+CMP SMALLEST,AL
+JB CONTINUE
+MOV SMALLEST,AL
+CONTINUE:CMP CX,0000H
+JNZ UP
+MOV AH,4CH
+INT 21H
+CODE ENDS
+END START
+                                                                                                                                                                   

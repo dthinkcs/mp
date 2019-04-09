@@ -1,0 +1,65 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/12/19 09:55:26
+                                                             Page     1-1
+
+
+       1 0000				DATA SEGMENT; 
+       2 0000  45 72 B5 A2 9C		Array1 dB 45H,72H,0B5H,0A2H,9CH; 
+       3 0005  0005[			Array2 dB 5 DUP(0); 
+       4	   00			
+       5			 ]	
+       6				
+       7 000A  05			COUNT DB 05H 
+       8 000B				DATA ENDS 
+       9 0000				CODE SEGMENT; 
+      10				        ASSUME CS:CODE,DS:DATA 
+      11 0000				START: 
+      12 0000  B8 ---- R		MOV AX,DATA 
+      13 0003  8E D8			MOV DS,AX 
+      14 0005  8D 36 0000 R		LEA SI,ARRAY1 
+      15 0009  8D 3E 0005 R		LEA DI,ARRAY2 
+      16 000D  B5 00			MOV CH,00H 
+      17 000F  8A 0E 000A R		MOV CL,COUNT 
+      18 0013  8A 04			NEXT: MOV AL,[SI] 
+      19 0015  88 05			      MOV [DI],AL 
+      20 0017  46			      INC SI 
+      21 0018  47			      INC DI 
+      22 0019  E2 F8			LOOP NEXT 
+      23 001B  B4 4C			MOV AH,4CH 
+      24 001D  CD 21			INT 21H; 
+      25 001F				CODE ENDS; 
+      26				END START 
+Microsoft (R) Macro Assembler Version 5.00                  1/12/19 09:55:26
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	001F	PARA	NONE	
+DATA . . . . . . . . . . . . . .  	000B	PARA	NONE	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ARRAY1 . . . . . . . . . . . . .  	L BYTE	0000	DATA
+ARRAY2 . . . . . . . . . . . . .  	L BYTE	0005	DATA	Length = 0005
+
+COUNT  . . . . . . . . . . . . .  	L BYTE	000A	DATA
+
+NEXT . . . . . . . . . . . . . .  	L NEAR	0013	CODE
+
+START  . . . . . . . . . . . . .  	L NEAR	0000	CODE
+
+@FILENAME  . . . . . . . . . . .  	TEXT  LAB2		
+
+
+     23 Source  Lines
+     23 Total   Lines
+      9 Symbols
+
+  50592 + 465952 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

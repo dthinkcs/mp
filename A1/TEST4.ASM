@@ -1,0 +1,66 @@
+;READ A SINGLE DIGIT DECIMAL NUMBER FROM THE KEYBOARD AND ROTATE LEFT A
+; 4 DIGIT HEXADECIMAL NUMBER  BY N(INPUT)   BY THAT DIGIT , DISPLAY THE
+; BINARY EQUIVALENT OF THE ROTATED NUMBER
+
+
+
+DATA SEGMENT
+        N DB ?
+        RD1      DB 'ENTER A SINGLE DIGIT DECIMAL NUMBER:$'
+        NXTLINE DB 10,13,'$'
+        RD2     DB 'THE BINARY CODE OF ROTATED NUMBER IS:$' 
+        NUM     DW 8888H
+DATA ENDS
+
+
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+
+DISP MACRO MSG
+    LEA DX,MSG
+    MOV AH,09
+    INT 21H
+ENDM
+
+START:
+        MOV AX,DATA
+        MOV DS,AX
+
+        DISP RD1
+        MOV AH,01
+        INT 21H
+        SUB AL,30H
+        MOV N,AL
+
+        MOV AX,NUM
+        MOV CL,N
+        ROL AX,CL
+
+        MOV BX,AX
+        DISP NXTLINE
+        DISP RD2
+
+        ;DISPLAY
+        
+        MOV CX,16
+
+        BK:
+           MOV DL,0
+           SHL BX,1
+           ADC DL,0
+           ADD DL,30H
+           MOV AH,02
+           INT 21H
+          
+           LOOP BK
+
+        MOV AH,4CH
+        INT 21H
+
+
+   CODE ENDS
+END START
+
+
+
+

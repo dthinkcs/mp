@@ -1,0 +1,44 @@
+Data Segment
+ MSG DB 'Hello'
+ COL DB 40
+DATA ENDS
+
+CODE SEGMENT 
+	 ASSUME CS:CODE, DS: DATA
+ START: 
+		MOV AX, DATA
+		MOV DS, AX
+		
+		MOV AH, 0
+		MOV AL, 3
+		INT 10H
+		MOV DL, 00
+		LEA DI, MSG
+		MOV CL, COL
+
+UP: 	MOV DH, [DI]
+		PUSH DS
+        MOV AX, 0B800H
+		MOV DS, AX
+		
+		MOV BL, 12
+		MOV AL, 160
+		MUL BL
+		MOV BX, AX
+		MOV AL, 2
+		MUL CL
+		ADD AX, BX
+		MOV SI, AX
+		MOV [SI], DH
+		MOV BYTE PTR [SI+1], 47H
+		INC DI
+		INC CL
+		POP DS
+		INC DL
+		CMP DL,05
+		JNZ UP
+		MOV AH, 4CH
+		INT 21H
+		
+	CODE ENDS
+END START

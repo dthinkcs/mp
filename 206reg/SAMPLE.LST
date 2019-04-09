@@ -1,0 +1,39 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/12/19 09:26:28
+                                                             Page     1-1
+
+
+ 0000				CODE SEGMENT; 
+				        ASSUME CS:CODE; 
+ 0000  B8 0005			START: MOV AX,05H; 
+ 0003  CD 21			INT 21H; 
+ 0005  FE 86 004C		INC 4CH; 
+SAMPLE.ASM(5): error A2056: Immediate mode illegal
+ 0009				CODE ENDS; 
+				END START 
+Microsoft (R) Macro Assembler Version 5.00                  1/12/19 09:26:28
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	0009	PARA	NONE	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+START  . . . . . . . . . . . . .  	L NEAR	0000	CODE
+
+@FILENAME  . . . . . . . . . . .  	TEXT  SAMPLE		
+
+
+      7 Source  Lines
+      7 Total   Lines
+      4 Symbols
+
+  51206 + 465338 Bytes symbol space free
+
+      0 Warning Errors
+      1 Severe  Errors

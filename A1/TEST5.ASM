@@ -1,0 +1,17 @@
+DATA SEGMENT
+        NUM1 DW 1234H
+        NUM2 DB 35H
+DATA ENDS
+
+
+CODE SEGMENT
+        ASSUME CS:CODE ,  DS:DATA
+START:
+        MOV AX,DATA
+        MOV DS,AX
+        MOV AX,NUM2
+        MOV AH,4CH
+        INT 21H
+ CODE ENDS
+END START
+

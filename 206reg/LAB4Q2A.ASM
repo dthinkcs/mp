@@ -1,0 +1,22 @@
+DATA SEGMENT
+        DIVIDEND DW 0E2A2H
+        DIVISOR DB 0E6H
+        Q DB ?
+        R DB ?
+DATA ENDS
+CODE SEGMENT
+ASSUME CS:CODE,DS:DATA
+START:
+        MOV AX,DATA
+        MOV DS,AX
+
+        MOV AX,DIVIDEND
+        MOV BH,DIVISOR
+        DIV BH
+        MOV Q,AL
+        MOV R,AH
+
+        MOV AH,4CH
+        INT 21H
+CODE ENDS
+END START

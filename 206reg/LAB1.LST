@@ -1,0 +1,37 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/12/19 09:29:34
+                                                             Page     1-1
+
+
+       1 0000				CODE SEGMENT; 
+       2				        ASSUME CS:CODE; 
+       3				START MOV AX,05H; 
+LAB1.ASM(3): error A2105: Expected: instruction or directive
+       4 0000  CD 21			INT 21H; 
+       5 0002				CODE ENDS; 
+       6				END START 
+LAB1.ASM(6): error A2009: Symbol not defined: START
+Microsoft (R) Macro Assembler Version 5.00                  1/12/19 09:29:34
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	0002	PARA	NONE	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+@FILENAME  . . . . . . . . . . .  	TEXT  LAB1		
+
+
+      6 Source  Lines
+      6 Total   Lines
+      3 Symbols
+
+  50714 + 465830 Bytes symbol space free
+
+      0 Warning Errors
+      2 Severe  Errors
